@@ -115,31 +115,43 @@ $(function() {
      */
     describe('New Feed Selection', function() {
       var $title, $feed, initialTitle, initialFirstArticleLink;
+      var newContentSpec = undefined;
 
-      beforeEach(function(done) {
-        $title = $('.header-title')
-        $feed = $('.feed');
+      /* Run this test only if there are more than one feed, otherwise the
+       * new content spec will not be able to be tested propery.
+       */
+      if (allFeeds.length > 1) {
+        beforeEach(function(done) {
+          $title = $('.header-title')
+          $feed = $('.feed');
 
-        // Initial feed load
-        loadFeed(0, function() {
-          initialTitle = $title.html();
-          initialFirstArticleLink = $feed.children().first().attr('href');
+          // Initial feed load
+          loadFeed(0, function() {
+            initialTitle = $title.html();
+            initialFirstArticleLink = $feed.children().first().attr('href');
 
-          // load new feed
-          loadFeed(1, function() {
-            done();
+            if (allFeeds.length > 1) {
+              // load new feed
+              loadFeed(1, function() {
+                done();
+              });
+            } else {
+              done();
+            }
           });
         });
-      });
+
+        newContentSpec = function(done) {
+          var newTitle = $title.html();
+          var newFirstArticleLink = $feed.children().first().attr('href');
+          expect(initialTitle).not.toBe(newTitle);
+          expect(initialFirstArticleLink).not.toBe(newFirstArticleLink);
+          done();
+        };
+      }
 
       /* Check that the new feed is loaded by the loadFeed function.
        */
-      it('has new content when new feed is loaded', function(done) {
-        var newTitle = $title.html();
-        var newFirstArticleLink = $feed.children().first().attr('href');
-        expect(initialTitle).not.toBe(newTitle);
-        expect(initialFirstArticleLink).not.toBe(newFirstArticleLink);
-        done();
-      });
+      it('has new content when new feed is loaded', newContentSpec);
     });
 }());
