@@ -120,7 +120,7 @@ $(function() {
          */
         if (allFeeds.length > 1) {
             beforeEach(function(done) {
-                $title = $('.header-title')
+                $title = $('.header-title');
                 $feed = $('.feed');
 
                 // Initial feed load
