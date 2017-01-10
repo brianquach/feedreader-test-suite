@@ -26,14 +26,12 @@ $(function() {
             expect(allFeeds.length).not.toBe(0);
         });
 
-        /* This suite is for just a single RSS feed definition
+        /* This suite is for just a single RSS feed definition.
         */
         describe('RSS Feed', function() {
           var feed;
 
-          /* TODO: Write a test that loops through each feed
-           * in the allFeeds object and ensures it has a URL defined
-           * and that the URL is not empty.
+          /* Check that RSS feed object has a non-empty URL property.
            */
           it('has a valid url', function() {
             for (var i = 0, l = allFeeds.length; i < l; i++) {
@@ -43,34 +41,56 @@ $(function() {
             }
           });
 
-          /* TODO: Write a test that loops through each feed
-           * in the allFeeds object and ensures it has a name defined
-           * and that the name is not empty.
+          /* Check that RSS feed object has a non-empty name property.
            */
-           it('has a valid name', function() {
-             for (var i = 0, l = allFeeds.length; i < l; i++) {
-               feed = allFeeds[i];
-               expect(feed.name).toBeDefined();
-               expect(feed.name).not.toBe('');
-             }
-           });
+          it('has a valid name', function() {
+            for (var i = 0, l = allFeeds.length; i < l; i++) {
+              feed = allFeeds[i];
+              expect(feed.name).toBeDefined();
+              expect(feed.name).not.toBe('');
+            }
+          });
         });
     });
 
+    /* This suite tests the menu existance and functionality.
+    */
+    describe('The menu', function() {
+      var $menuIcon, slideMenu, body;
 
-    /* TODO: Write a new test suite named "The menu" */
+      /* Get necessary DOM elements. Not necessary as each spec uses different
+       * DOM elements, but I used beforeAll for practice. Otherwise only the
+       * same DOM element used in multiple specs would be defined here.
+       */
+      beforeAll(function() {
+        slideMenu = document.getElementsByClassName('slide-menu');
+        body = document.getElementsByTagName('body')[0];
+        $menuIcon = $('.menu-icon-link');
+      });
 
-        /* TODO: Write a test that ensures the menu element is
-         * hidden by default. You'll have to analyze the HTML and
-         * the CSS to determine how we're performing the
-         * hiding/showing of the menu element.
-         */
+      /* Test that there is at least one sliding menu on the page.
+       */
+      it('has at least one sliding menu', function() {
+        expect(slideMenu.length).not.toBe(0);
+      });
 
-         /* TODO: Write a test that ensures the menu changes
-          * visibility when the menu icon is clicked. This test
-          * should have two expectations: does the menu display when
-          * clicked and does it hide when clicked again.
-          */
+      /* Test for initial sliding menu state to be hidden.
+       */
+      it('is hidden', function() {
+        expect(body.classList).toContain('menu-hidden');
+      });
+
+      /* Test that the sliding menu is visible on the menu icon click and not
+       * visible after a second menu icon click.
+       */
+      it('is changing visibility when menu icon is clicked', function() {
+        $menuIcon.trigger('click');
+        expect(body.classList).not.toContain('menu-hidden');
+        $menuIcon.trigger('click');
+        expect(body.classList).toContain('menu-hidden');
+      });
+    });
+
 
     /* TODO: Write a new test suite named "Initial Entries" */
 
