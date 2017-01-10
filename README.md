@@ -7,7 +7,6 @@ Explore the test-driven development world with Jasmine. This project adds a suit
 * [Copyright and License](#copyright-and-license)
 
 ## Installation and Run
-Grab code source:
 * Clone repository: `git clone https://github.com/brianquach/feedreader-test-suite.git` or download the zip [here](https://github.com/brianquach/feedreader-test-suite/archive/master.zip).
 * Navigate to the directory where you cloned the repo or unzipped the file.
 * Use your favorite browser to open `index.html`.
