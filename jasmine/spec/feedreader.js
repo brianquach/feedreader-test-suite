@@ -91,20 +91,55 @@ $(function() {
       });
     });
 
+    /* This suite tests the initial feed load entries.
+     */
+    describe('Initial Entries', function() {
+      /* Start asynchronous call in loadFeed.
+       */
+      beforeEach(function(done) {
+        loadFeed(0, function() {
+          done();
+        });
+      });
 
-    /* TODO: Write a new test suite named "Initial Entries" */
+      /* Test if loadFeed has loaded articles from AJAX call onto the page.
+       */
+      it('loads at least one entry', function(done) {
+        var $entries = $('.entry-link');
+        expect($entries.length).toBeGreaterThan(0);
+        done();
+      });
+    });
 
-        /* TODO: Write a test that ensures when the loadFeed
-         * function is called and completes its work, there is at least
-         * a single .entry element within the .feed container.
-         * Remember, loadFeed() is asynchronous so this test will require
-         * the use of Jasmine's beforeEach and asynchronous done() function.
-         */
+    /* Test feed section functionality.
+     */
+    describe('New Feed Selection', function() {
+      var $title, $feed, initialTitle, initialFirstArticleLink;
 
-    /* TODO: Write a new test suite named "New Feed Selection"
+      beforeEach(function(done) {
+        $title = $('.header-title')
+        $feed = $('.feed');
 
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
-         */
+        // Initial feed load
+        loadFeed(0, function() {
+          initialTitle = $title.html();
+          initialFirstArticleLink = $feed.children().first().attr('href');
+
+          // load new feed
+          loadFeed(1, function() {
+            done();
+          });
+        });
+      });
+
+      /* Check that the new feed is loaded by the loadFeed function.
+       */
+      it('has new content when new feed is loaded', function(done) {
+        var newTitle = $title.html();
+        var newFirstArticleLink = $feed.children().first().attr('href');
+        expect(initialTitle).not.toBe(newTitle);
+        expect(initialFirstArticleLink).not.toBe(newFirstArticleLink);
+        done();
+      });
+    });
 }());
