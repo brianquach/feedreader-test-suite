@@ -26,17 +26,35 @@ $(function() {
             expect(allFeeds.length).not.toBe(0);
         });
 
+        /* This suite is for just a single RSS feed definition
+        */
+        describe('RSS Feed', function() {
+          var feed;
 
-        /* TODO: Write a test that loops through each feed
-         * in the allFeeds object and ensures it has a URL defined
-         * and that the URL is not empty.
-         */
+          /* TODO: Write a test that loops through each feed
+           * in the allFeeds object and ensures it has a URL defined
+           * and that the URL is not empty.
+           */
+          it('has a valid url', function() {
+            for (var i = 0, l = allFeeds.length; i < l; i++) {
+              feed = allFeeds[i];
+              expect(feed.url).toBeDefined();
+              expect(feed.url).not.toBe('');
+            }
+          });
 
-
-        /* TODO: Write a test that loops through each feed
-         * in the allFeeds object and ensures it has a name defined
-         * and that the name is not empty.
-         */
+          /* TODO: Write a test that loops through each feed
+           * in the allFeeds object and ensures it has a name defined
+           * and that the name is not empty.
+           */
+           it('has a valid name', function() {
+             for (var i = 0, l = allFeeds.length; i < l; i++) {
+               feed = allFeeds[i];
+               expect(feed.name).toBeDefined();
+               expect(feed.name).not.toBe('');
+             }
+           });
+        });
     });
 
 
