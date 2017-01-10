@@ -103,10 +103,9 @@ $(function() {
 
         /* Test if loadFeed has loaded articles from AJAX call onto the page.
          */
-        it('loads at least one entry', function(done) {
-            var $entries = $('.entry-link');
+        it('loads at least one entry', function() {
+            var $entries = $('.feed .entry');
             expect($entries.length).toBeGreaterThan(0);
-            done();
         });
     });
 
@@ -114,7 +113,7 @@ $(function() {
      */
     describe('New Feed Selection', function() {
         var $title, $feed, initialTitle, initialFirstArticleLink;
-        var newContentSpec = undefined;
+        var newContentSpec;
 
         /* Run this test only if there are more than one feed, otherwise the
          * new content spec will not be able to be tested propery.
@@ -131,23 +130,18 @@ $(function() {
                         .first()
                         .attr('href');
 
-                    if (allFeeds.length > 1) {
-                        // load new feed
-                        loadFeed(1, function() {
-                            done();
-                        });
-                    } else {
+                    // load new feed
+                    loadFeed(1, function() {
                         done();
-                    }
+                    });
                 });
             });
 
-            newContentSpec = function(done) {
+            newContentSpec = function() {
                 var newTitle = $title.html();
                 var newFirstArticleLink = $feed.children().first().attr('href');
                 expect(initialTitle).not.toBe(newTitle);
                 expect(initialFirstArticleLink).not.toBe(newFirstArticleLink);
-                done();
             };
         }
 
